@@ -12,12 +12,13 @@ import java.util.stream.Collectors;
 
 public class CharacterMapper {
 
+    private static final Integer PAGINATOR = 10;
 
     public static CustomCharactersDto toCustomResponse(AllCharactersDto dto) {
 
         return CustomCharactersDto.builder()
                 .count(dto.getCount())
-                .pages(1)
+                .pages(calculatePages(dto.getCount()))
                 .elements(toCustomCharacter(dto.getResults()))
                 .build();
 
@@ -46,7 +47,14 @@ public class CharacterMapper {
 
         var ulrArray = url.split("/");
 
-        return Integer.valueOf(ulrArray[ulrArray.length -1]);
+        return Integer.valueOf(ulrArray[ulrArray.length - 1]);
+    }
+
+    private static Integer calculatePages(Integer totalSWcharacters) {
+
+        Double pagesInDouble = Math.ceil((double) totalSWcharacters / PAGINATOR);
+
+        return pagesInDouble.intValue();
     }
 
 
