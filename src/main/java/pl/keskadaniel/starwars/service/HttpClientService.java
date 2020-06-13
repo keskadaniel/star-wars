@@ -19,7 +19,7 @@ public class HttpClientService {
             .build();
 
 
-    public String doGet (String filePath){
+    public String doGet(String filePath) {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
