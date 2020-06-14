@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.keskadaniel.starwars.model.CharacterMapper;
-import pl.keskadaniel.starwars.model.external.AllCharactersDto;
-import pl.keskadaniel.starwars.model.response.CustomCharactersDto;
+import pl.keskadaniel.starwars.model.api.AllCharactersDto;
+import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
 import pl.keskadaniel.starwars.service.CharacterService;
 
 @RestController
@@ -22,7 +22,7 @@ public class CharacterController {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping
-    public CustomCharactersDto findAll(@RequestParam(name = "page", required = false) final String pageNumber) throws JsonProcessingException {
+    public CustomAllCharactersDto findAll(@RequestParam(name = "page", required = false) final String pageNumber) throws JsonProcessingException {
 
         AllCharactersDto all = objectMapper.readValue(characterService.findAll(pageNumber), AllCharactersDto.class);
 

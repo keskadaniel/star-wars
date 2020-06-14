@@ -1,4 +1,4 @@
-package pl.keskadaniel.starwars.model.response;
+package pl.keskadaniel.starwars.model.custom;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 @Builder
-public class CustomCharactersDto {
+public class CustomAllCharactersDto {
 
     private Integer count;
     private Integer pages;
-    private List<CustomSWcharacterDto> elements;
+    private List<CustomCharacterDto> elements;
 
 }

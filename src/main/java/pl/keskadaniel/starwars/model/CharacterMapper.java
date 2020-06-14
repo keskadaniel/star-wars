@@ -1,10 +1,10 @@
 package pl.keskadaniel.starwars.model;
 
-import pl.keskadaniel.starwars.model.external.AllCharactersDto;
-import pl.keskadaniel.starwars.model.external.StarWarsCharacterDto;
-import pl.keskadaniel.starwars.model.response.CustomCharactersDto;
-import pl.keskadaniel.starwars.model.response.CustomSWcharacterDto;
-import pl.keskadaniel.starwars.model.response.HomeworldDto;
+import pl.keskadaniel.starwars.model.api.AllCharactersDto;
+import pl.keskadaniel.starwars.model.api.CharacterDto;
+import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
+import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
+import pl.keskadaniel.starwars.model.custom.CustomHomeworldDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ public class CharacterMapper {
 
     private static final Integer PAGINATOR = 10;
 
-    public static CustomCharactersDto toCustomResponse(AllCharactersDto dto) {
+    public static CustomAllCharactersDto toCustomResponse(AllCharactersDto dto) {
 
-        return CustomCharactersDto.builder()
+        return CustomAllCharactersDto.builder()
                 .count(dto.getCount())
                 .pages(calculatePages(dto.getCount()))
                 .elements(toCustomCharacter(dto.getResults()))
@@ -24,16 +24,16 @@ public class CharacterMapper {
 
     }
 
-    private static List<CustomSWcharacterDto> toCustomCharacter(List<StarWarsCharacterDto> dto) {
+    private static List<CustomCharacterDto> toCustomCharacter(List<CharacterDto> dto) {
 
         return dto.stream()
-                .map(swCharacter -> CustomSWcharacterDto.builder()
+                .map(swCharacter -> CustomCharacterDto.builder()
                         .birthYear(swCharacter.getBirth_year())
                         .eyeColor(swCharacter.getEye_color())
                         .gender(swCharacter.getGender())
                         .hairColor(swCharacter.getHair_color())
                         .height(swCharacter.getHeight())
-                        .homeworld(HomeworldDto.builder().build())
+                        .homeworld(CustomHomeworldDto.builder().build())
                         .mass(swCharacter.getMass())
                         .name(swCharacter.getName())
                         .skinColor(swCharacter.getSkin_color())

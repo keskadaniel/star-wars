@@ -1,11 +1,13 @@
-package pl.keskadaniel.starwars.model.external;
+package pl.keskadaniel.starwars.model.api;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-public class StarWarsCharacterDto {
+@Setter
+public class CharacterDto {
 
     private String name;
     private String height;

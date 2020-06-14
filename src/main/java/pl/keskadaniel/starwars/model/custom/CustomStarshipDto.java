@@ -1,11 +1,11 @@
-package pl.keskadaniel.starwars.model.response;
+package pl.keskadaniel.starwars.model.custom;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-public class StarshipDto {
+public class CustomStarshipDto {
 
     private String name;
     private String model;

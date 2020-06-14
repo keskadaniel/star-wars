@@ -1,4 +1,4 @@
-package pl.keskadaniel.starwars.model.response;
+package pl.keskadaniel.starwars.model.custom;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class CustomSWcharacterDto {
+public class CustomCharacterDto {
 
     private Integer id;
     private String name;
@@ -18,7 +18,7 @@ public class CustomSWcharacterDto {
     private String eyeColor;
     private String birthYear;
     private String gender;
-    private HomeworldDto homeworld;
-    private List<StarshipDto> starships;
+    private CustomHomeworldDto homeworld;
+    private List<CustomStarshipDto> starships;
 
 }
