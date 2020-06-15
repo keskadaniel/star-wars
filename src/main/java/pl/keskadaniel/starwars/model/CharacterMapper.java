@@ -48,26 +48,6 @@ public class CharacterMapper {
 
     }
 
-//    private static List<CustomCharacterDto> toCustomCharacter(List<CharacterDto> dto) {
-//
-//        return dto.stream()
-//                .map(swCharacter ->
-//                        CustomCharacterDto.builder()
-//                                .birthYear(swCharacter.getBirthYear())
-//                                .eyeColor(swCharacter.getEyeColor())
-//                                .gender(swCharacter.getGender())
-//                                .hairColor(swCharacter.getHairColor())
-//                                .height(swCharacter.getHeight())
-//                                .homeworld(setHomeworld(swCharacter.getHomeworldDto()))
-//                                .mass(swCharacter.getMass())
-//                                .name(swCharacter.getName())
-//                                .skinColor(swCharacter.getSkinColor())
-//                                .starships(setStarships(swCharacter.getStarshipDtos()))
-//                                .id(fetchId(swCharacter.getUrl()))
-//                                .build())
-//                .collect(Collectors.toList());
-//    }
-
     private static List<CustomStarshipDto> setStarships(List<StarshipDto> starshipsDto) {
 
         return starshipsDto.stream()

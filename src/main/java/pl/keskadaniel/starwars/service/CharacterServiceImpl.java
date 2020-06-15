@@ -37,14 +37,14 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public CharacterDto findById(String id) {
+    public CharacterDto findById(final String id) {
 
-        String characterPath = allCharactersPath + id + "/";
+        var characterPath = allCharactersPath + id + "/";
         CharacterDto characterDto = getCharacter(characterPath);
 
-        if(characterDto != null){
-            characterDto.setHomeworldDto(fetchHomeworld(characterDto));
-            characterDto.setStarshipDtos(fetchStarships(characterDto));
+        if (characterDto != null) {
+            characterDto.setHomeworldDto(fetchHomeworldForCharacter(characterDto));
+            characterDto.setStarshipDtos(fetchStarshipsForCharacter(characterDto));
         }
 
         return characterDto;
@@ -54,22 +54,22 @@ public class CharacterServiceImpl implements CharacterService {
         AllCharactersDto allCharacters = getAllCharacters(allCharactersPath);
 
         if (allCharacters != null) {
-            getHomeworld(allCharacters);
-            getStarships(allCharacters);
+            getHomeworldForAll(allCharacters);
+            getStarshipsForAll(allCharacters);
         }
         return allCharacters;
     }
 
-    private void getStarships(AllCharactersDto allCharacters) {
+    private void getStarshipsForAll(AllCharactersDto allCharacters) {
         allCharacters.getResults().stream()
                 .filter(characterDto -> characterDto.getStarships() != null)
                 .forEach(characterDto -> {
-                    List<StarshipDto> starshipList = fetchStarships(characterDto);
+                    List<StarshipDto> starshipList = fetchStarshipsForCharacter(characterDto);
                     characterDto.setStarshipDtos(starshipList);
                 });
     }
 
-    private List<StarshipDto> fetchStarships(CharacterDto characterDto) {
+    private List<StarshipDto> fetchStarshipsForCharacter(CharacterDto characterDto) {
         List<StarshipDto> starshipList = new ArrayList<>();
 
         characterDto.getStarships().stream()
@@ -88,16 +88,16 @@ public class CharacterServiceImpl implements CharacterService {
         return starshipList;
     }
 
-    private void getHomeworld(AllCharactersDto allCharacters) {
+    private void getHomeworldForAll(AllCharactersDto allCharacters) {
         allCharacters.getResults().stream()
                 .filter(characterDto -> characterDto.getHomeworld() != null)
                 .forEach(characterDto -> {
-                    HomeworldDto homeworldDto = fetchHomeworld(characterDto);
+                    HomeworldDto homeworldDto = fetchHomeworldForCharacter(characterDto);
                     characterDto.setHomeworldDto(homeworldDto);
                 });
     }
 
-    private HomeworldDto fetchHomeworld(CharacterDto characterDto) {
+    private HomeworldDto fetchHomeworldForCharacter(CharacterDto characterDto) {
         String homeworldInString = httpClient.doGet(characterDto.getHomeworld());
         HomeworldDto homeworldDto = new HomeworldDto();
         try {
