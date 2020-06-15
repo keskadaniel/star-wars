@@ -36,6 +36,20 @@ public class CharacterServiceImpl implements CharacterService {
         return allCharacters;
     }
 
+    @Override
+    public CharacterDto findById(String id) {
+
+        String characterPath = allCharactersPath + id + "/";
+        CharacterDto characterDto = getCharacter(characterPath);
+
+        if(characterDto != null){
+            characterDto.setHomeworldDto(fetchHomeworld(characterDto));
+            characterDto.setStarshipDtos(fetchStarships(characterDto));
+        }
+
+        return characterDto;
+    }
+
     private AllCharactersDto getCharacters(String allCharactersPath) {
         AllCharactersDto allCharacters = getAllCharacters(allCharactersPath);
 
@@ -78,15 +92,20 @@ public class CharacterServiceImpl implements CharacterService {
         allCharacters.getResults().stream()
                 .filter(characterDto -> characterDto.getHomeworld() != null)
                 .forEach(characterDto -> {
-                    String homeworldInString = httpClient.doGet(characterDto.getHomeworld());
-                    HomeworldDto homeworldDto = new HomeworldDto();
-                    try {
-                        homeworldDto = objectMapper.readValue(homeworldInString, HomeworldDto.class);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
+                    HomeworldDto homeworldDto = fetchHomeworld(characterDto);
                     characterDto.setHomeworldDto(homeworldDto);
                 });
+    }
+
+    private HomeworldDto fetchHomeworld(CharacterDto characterDto) {
+        String homeworldInString = httpClient.doGet(characterDto.getHomeworld());
+        HomeworldDto homeworldDto = new HomeworldDto();
+        try {
+            homeworldDto = objectMapper.readValue(homeworldInString, HomeworldDto.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return homeworldDto;
     }
 
     private AllCharactersDto getAllCharacters(String charactersPath) {
@@ -99,5 +118,17 @@ public class CharacterServiceImpl implements CharacterService {
             e.printStackTrace();
         }
         return allCharactersDto;
+    }
+
+    private CharacterDto getCharacter(String characterPath) {
+        var charactersInString = httpClient.doGet(characterPath);
+        CharacterDto characterDto = null;
+
+        try {
+            characterDto = objectMapper.readValue(charactersInString, CharacterDto.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return characterDto;
     }
 }

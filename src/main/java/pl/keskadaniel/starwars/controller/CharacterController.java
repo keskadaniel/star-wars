@@ -2,15 +2,13 @@ package pl.keskadaniel.starwars.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.keskadaniel.starwars.model.CharacterMapper;
 import pl.keskadaniel.starwars.model.api.AllCharactersDto;
+import pl.keskadaniel.starwars.model.api.CharacterDto;
 import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
+import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
 import pl.keskadaniel.starwars.service.CharacterService;
 
 @RestController
@@ -25,7 +23,15 @@ public class CharacterController {
 
         AllCharactersDto all = characterService.findAll(pageNumber);
 
-        return CharacterMapper.toCustomResponse(all);
+        return CharacterMapper.toCustomCharactersList(all);
+    }
+
+    @GetMapping("/{id}")
+    public CustomCharacterDto findById(@PathVariable final String id) {
+
+        CharacterDto characterDto = characterService.findById(id);
+
+        return CharacterMapper.toCustomCharacter(characterDto);
     }
 
 

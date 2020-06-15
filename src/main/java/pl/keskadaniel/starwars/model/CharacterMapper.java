@@ -16,35 +16,57 @@ public class CharacterMapper {
 
     private static final Integer PAGINATOR = 10;
 
-    public static CustomAllCharactersDto toCustomResponse(AllCharactersDto dto) {
+    public static CustomAllCharactersDto toCustomCharactersList(AllCharactersDto dto) {
+
+        List<CustomCharacterDto> customCharacters = dto.getResults().stream()
+                .map(characterDto -> toCustomCharacter(characterDto))
+                .collect(Collectors.toList());
 
         return CustomAllCharactersDto.builder()
                 .count(dto.getCount())
                 .pages(calculatePages(dto.getCount()))
-                .elements(toCustomCharacter(dto.getResults()))
+                .elements(customCharacters)
                 .build();
 
     }
 
-    private static List<CustomCharacterDto> toCustomCharacter(List<CharacterDto> dto) {
+    public static CustomCharacterDto toCustomCharacter(CharacterDto dto) {
 
-        return dto.stream()
-                .map(swCharacter ->
-                        CustomCharacterDto.builder()
-                                .birthYear(swCharacter.getBirthYear())
-                                .eyeColor(swCharacter.getEyeColor())
-                                .gender(swCharacter.getGender())
-                                .hairColor(swCharacter.getHairColor())
-                                .height(swCharacter.getHeight())
-                                .homeworld(setHomeworld(swCharacter.getHomeworldDto()))
-                                .mass(swCharacter.getMass())
-                                .name(swCharacter.getName())
-                                .skinColor(swCharacter.getSkinColor())
-                                .starships(setStarships(swCharacter.getStarshipDtos()))
-                                .id(fetchId(swCharacter.getUrl()))
-                                .build())
-                .collect(Collectors.toList());
+        return CustomCharacterDto.builder()
+                .birthYear(dto.getBirthYear())
+                .eyeColor(dto.getEyeColor())
+                .gender(dto.getGender())
+                .hairColor(dto.getHairColor())
+                .height(dto.getHeight())
+                .homeworld(setHomeworld(dto.getHomeworldDto()))
+                .mass(dto.getMass())
+                .name(dto.getName())
+                .skinColor(dto.getSkinColor())
+                .starships(setStarships(dto.getStarshipDtos()))
+                .id(fetchId(dto.getUrl()))
+                .build();
+
     }
+
+//    private static List<CustomCharacterDto> toCustomCharacter(List<CharacterDto> dto) {
+//
+//        return dto.stream()
+//                .map(swCharacter ->
+//                        CustomCharacterDto.builder()
+//                                .birthYear(swCharacter.getBirthYear())
+//                                .eyeColor(swCharacter.getEyeColor())
+//                                .gender(swCharacter.getGender())
+//                                .hairColor(swCharacter.getHairColor())
+//                                .height(swCharacter.getHeight())
+//                                .homeworld(setHomeworld(swCharacter.getHomeworldDto()))
+//                                .mass(swCharacter.getMass())
+//                                .name(swCharacter.getName())
+//                                .skinColor(swCharacter.getSkinColor())
+//                                .starships(setStarships(swCharacter.getStarshipDtos()))
+//                                .id(fetchId(swCharacter.getUrl()))
+//                                .build())
+//                .collect(Collectors.toList());
+//    }
 
     private static List<CustomStarshipDto> setStarships(List<StarshipDto> starshipsDto) {
 
