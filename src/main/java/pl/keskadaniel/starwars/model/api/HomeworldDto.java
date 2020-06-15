@@ -1,23 +1,36 @@
 package pl.keskadaniel.starwars.model.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.keskadaniel.starwars.model.base.SWhomeworld;
 
 import java.util.List;
 
 @Getter
 @Setter
-public class HomeworldDto {
+@NoArgsConstructor
+public class HomeworldDto extends SWhomeworld {
 
-    private String name;
-    private String rotation_period;
-    private String orbital_period;
-    private String diameter;
-    private String climate;
-    private String gravity;
-    private String terrain;
-    private String surface_water;
-    private String population;
+    @Override
+    @JsonProperty("rotation_period")
+    public String getRotationPeriod() {
+        return super.getRotationPeriod();
+    }
+
+    @Override
+    @JsonProperty("orbital_period")
+    public String getOrbitalPeriod() {
+        return super.getOrbitalPeriod();
+    }
+
+    @Override
+    @JsonProperty("surface_water")
+    public String getSurfaceWater() {
+        return super.getSurfaceWater();
+    }
+
     private List<String> residents;
     private List<String> films;
     private String created;

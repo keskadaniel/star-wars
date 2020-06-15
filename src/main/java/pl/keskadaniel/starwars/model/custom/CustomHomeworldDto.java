@@ -1,20 +1,16 @@
 package pl.keskadaniel.starwars.model.custom;
 
 import lombok.Builder;
-import lombok.Getter;
+import pl.keskadaniel.starwars.model.base.SWhomeworld;
 
-@Getter
-@Builder
-public class CustomHomeworldDto {
 
-    private String name;
-    private String rotationPeriod;
-    private String orbitalPeriod;
-    private String diameter;
-    private String climate;
-    private String gravity;
-    private String terrain;
-    private String surfaceWater;
-    private String population;
+public class CustomHomeworldDto extends SWhomeworld {
 
+    @Builder
+    public CustomHomeworldDto(String name, String rotationPeriod, String orbitalPeriod,
+                              String diameter, String climate, String gravity, String terrain,
+                              String surfaceWater, String population) {
+        super(name, rotationPeriod, orbitalPeriod, diameter, climate, gravity, terrain,
+                surfaceWater, population);
+    }
 }
