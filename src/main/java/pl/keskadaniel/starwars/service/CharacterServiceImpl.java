@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.keskadaniel.starwars.model.api.*;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +44,8 @@ public class CharacterServiceImpl implements CharacterService {
         allCharacters.getResults().stream()
                 .filter(characterDto -> characterDto.getStarships() != null)
                 .forEach(characterDto -> {
-
                     List<StarshipDto> starshipList = fetchStarships(characterDto);
                     characterDto.setStarshipsDto(starshipList);
-//                    return characterDto;
                 });
     }
 
@@ -63,10 +60,9 @@ public class CharacterServiceImpl implements CharacterService {
                                 starshipDto = objectMapper.readValue(starshipInString, StarshipDto.class);
                                 starshipList.add(starshipDto);
                             } catch (JsonProcessingException e) {
-
+                                e.printStackTrace();
                             }
 
-//
                         }
                 );
 
@@ -85,7 +81,6 @@ public class CharacterServiceImpl implements CharacterService {
                         e.printStackTrace();
                     }
                     characterDto.setHomeworldDto(homeworldDto);
-//                    return characterDto;
                 });
     }
 

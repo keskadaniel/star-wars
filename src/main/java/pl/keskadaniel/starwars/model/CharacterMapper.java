@@ -3,9 +3,11 @@ package pl.keskadaniel.starwars.model;
 import pl.keskadaniel.starwars.model.api.AllCharactersDto;
 import pl.keskadaniel.starwars.model.api.CharacterDto;
 import pl.keskadaniel.starwars.model.api.HomeworldDto;
+import pl.keskadaniel.starwars.model.api.StarshipDto;
 import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
 import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
 import pl.keskadaniel.starwars.model.custom.CustomHomeworldDto;
+import pl.keskadaniel.starwars.model.custom.CustomStarshipDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +41,30 @@ public class CharacterMapper {
                                 .mass(swCharacter.getMass())
                                 .name(swCharacter.getName())
                                 .skinColor(swCharacter.getSkinColor())
-                                .starships(new ArrayList<>())
+                                .starships(setStarships(swCharacter.getStarshipsDto()))
                                 .id(fetchId(swCharacter.getUrl()))
                                 .build())
                 .collect(Collectors.toList());
+    }
+
+    private static List<CustomStarshipDto> setStarships(List<StarshipDto> starshipsDto) {
+        return starshipsDto.stream()
+                .map(starship -> CustomStarshipDto.builder()
+                        .cargoCapacity(starship.getCargoCapacity())
+                        .consumables(starship.getConsumables())
+                        .costInCredits(starship.getCostInCredits())
+                        .crew(starship.getCrew())
+                        .hyperdriveRating(starship.getHyperdriveRating())
+                        .length(starship.getLength())
+                        .manufacturer(starship.getManufacturer())
+                        .maxAtmosphericSpeed(starship.getMaxAtmosphericSpeed())
+                        .mglt(starship.getMglt())
+                        .model(starship.getModel())
+                        .name(starship.getName())
+                        .passengers(starship.getPassengers())
+                        .starshipClass(starship.getStarshipClass())
+                        .build()
+                ).collect(Collectors.toList());
     }
 
     private static CustomHomeworldDto setHomeworld(HomeworldDto dto) {
