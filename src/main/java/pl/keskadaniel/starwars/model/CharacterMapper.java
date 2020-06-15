@@ -27,19 +27,20 @@ public class CharacterMapper {
     private static List<CustomCharacterDto> toCustomCharacter(List<CharacterDto> dto) {
 
         return dto.stream()
-                .map(swCharacter -> CustomCharacterDto.builder()
-                        .birthYear(swCharacter.getBirth_year())
-                        .eyeColor(swCharacter.getEye_color())
-                        .gender(swCharacter.getGender())
-                        .hairColor(swCharacter.getHair_color())
-                        .height(swCharacter.getHeight())
-                        .homeworld(CustomHomeworldDto.builder().build())
-                        .mass(swCharacter.getMass())
-                        .name(swCharacter.getName())
-                        .skinColor(swCharacter.getSkin_color())
-                        .starships(new ArrayList<>())
-                        .id(fetchId(swCharacter.getUrl()))
-                        .build())
+                .map(swCharacter ->
+                        CustomCharacterDto.builder()
+                                .birthYear(swCharacter.getBirthYear())
+                                .eyeColor(swCharacter.getEyeColor())
+                                .gender(swCharacter.getGender())
+                                .hairColor(swCharacter.getHairColor())
+                                .height(swCharacter.getHeight())
+                                .homeworld(CustomHomeworldDto.builder().build())
+                                .mass(swCharacter.getMass())
+                                .name(swCharacter.getName())
+                                .skinColor(swCharacter.getSkinColor())
+                                .starships(new ArrayList<>())
+                                .id(fetchId(swCharacter.getUrl()))
+                                .build())
                 .collect(Collectors.toList());
     }
 
