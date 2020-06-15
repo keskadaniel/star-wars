@@ -26,17 +26,23 @@ public class CharacterServiceImpl implements CharacterService {
     public AllCharactersDto findAll(String pageNumber) {
 
         if (pageNumber == null) {
-//            return httpClient.doGet(allCharactersPath);
+            AllCharactersDto allCharacters = getCharacters(allCharactersPath);
+            return allCharacters;
         }
 
         var paginatedCharactersPath = allCharactersPath + "?page=" + pageNumber;
-        AllCharactersDto allCharacters = getAllCharacters(paginatedCharactersPath);
+        AllCharactersDto allCharacters = getCharacters(paginatedCharactersPath);
+
+        return allCharacters;
+    }
+
+    private AllCharactersDto getCharacters(String allCharactersPath) {
+        AllCharactersDto allCharacters = getAllCharacters(allCharactersPath);
+
         if (allCharacters != null) {
             getHomeworld(allCharacters);
             getStarships(allCharacters);
         }
-
-
         return allCharacters;
     }
 
@@ -45,7 +51,7 @@ public class CharacterServiceImpl implements CharacterService {
                 .filter(characterDto -> characterDto.getStarships() != null)
                 .forEach(characterDto -> {
                     List<StarshipDto> starshipList = fetchStarships(characterDto);
-                    characterDto.setStarshipsDto(starshipList);
+                    characterDto.setStarshipDtos(starshipList);
                 });
     }
 
@@ -62,7 +68,6 @@ public class CharacterServiceImpl implements CharacterService {
                             } catch (JsonProcessingException e) {
                                 e.printStackTrace();
                             }
-
                         }
                 );
 

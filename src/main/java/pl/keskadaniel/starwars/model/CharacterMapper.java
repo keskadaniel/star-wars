@@ -9,7 +9,6 @@ import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
 import pl.keskadaniel.starwars.model.custom.CustomHomeworldDto;
 import pl.keskadaniel.starwars.model.custom.CustomStarshipDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +40,14 @@ public class CharacterMapper {
                                 .mass(swCharacter.getMass())
                                 .name(swCharacter.getName())
                                 .skinColor(swCharacter.getSkinColor())
-                                .starships(setStarships(swCharacter.getStarshipsDto()))
+                                .starships(setStarships(swCharacter.getStarshipDtos()))
                                 .id(fetchId(swCharacter.getUrl()))
                                 .build())
                 .collect(Collectors.toList());
     }
 
     private static List<CustomStarshipDto> setStarships(List<StarshipDto> starshipsDto) {
+
         return starshipsDto.stream()
                 .map(starship -> CustomStarshipDto.builder()
                         .cargoCapacity(starship.getCargoCapacity())
