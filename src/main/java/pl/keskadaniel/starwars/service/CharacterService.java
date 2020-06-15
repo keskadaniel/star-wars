@@ -1,8 +1,11 @@
 package pl.keskadaniel.starwars.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import pl.keskadaniel.starwars.model.api.AllCharactersDto;
+
 public interface CharacterService {
 
-    String findAll(String pageNumber);
+    AllCharactersDto findAll(String pageNumber) throws JsonProcessingException;
 
 
 }

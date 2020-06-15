@@ -2,6 +2,7 @@ package pl.keskadaniel.starwars.model;
 
 import pl.keskadaniel.starwars.model.api.AllCharactersDto;
 import pl.keskadaniel.starwars.model.api.CharacterDto;
+import pl.keskadaniel.starwars.model.api.HomeworldDto;
 import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
 import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
 import pl.keskadaniel.starwars.model.custom.CustomHomeworldDto;
@@ -34,7 +35,7 @@ public class CharacterMapper {
                                 .gender(swCharacter.getGender())
                                 .hairColor(swCharacter.getHairColor())
                                 .height(swCharacter.getHeight())
-                                .homeworld(CustomHomeworldDto.builder().build())
+                                .homeworld(setHomeworld(swCharacter.getHomeworldDto()))
                                 .mass(swCharacter.getMass())
                                 .name(swCharacter.getName())
                                 .skinColor(swCharacter.getSkinColor())
@@ -42,6 +43,21 @@ public class CharacterMapper {
                                 .id(fetchId(swCharacter.getUrl()))
                                 .build())
                 .collect(Collectors.toList());
+    }
+
+    private static CustomHomeworldDto setHomeworld(HomeworldDto dto) {
+
+        return CustomHomeworldDto.builder()
+                .climate(dto.getClimate())
+                .diameter(dto.getDiameter())
+                .gravity(dto.getGravity())
+                .name(dto.getName())
+                .orbitalPeriod(dto.getOrbitalPeriod())
+                .population(dto.getPopulation())
+                .rotationPeriod(dto.getRotationPeriod())
+                .surfaceWater(dto.getSurfaceWater())
+                .terrain(dto.getTerrain())
+                .build();
     }
 
     private static Integer fetchId(String url) {

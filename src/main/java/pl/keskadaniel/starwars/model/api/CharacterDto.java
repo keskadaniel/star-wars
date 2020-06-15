@@ -46,4 +46,7 @@ public class CharacterDto extends SWcharacter {
     private String edited;
     private String url;
 
+    private HomeworldDto homeworldDto;
+    private List<StarshipDto> starshipsDto;
+
 }

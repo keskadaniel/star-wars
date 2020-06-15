@@ -1,21 +1,23 @@
 package pl.keskadaniel.starwars.service;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 @Service
 public class HttpClientService {
 
-    private static final HttpClient httpClient = HttpClient.newBuilder()
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+    private final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
+            .executor(executorService)
+            .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
 
 
@@ -38,7 +40,7 @@ public class HttpClientService {
         String result = "Something gone wrong!";
 
         try {
-            result = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+            result = response.thenApply(HttpResponse::body).get(10, TimeUnit.SECONDS);
         } catch (InterruptedException interruptedException) {
             interruptedException.printStackTrace();
         } catch (ExecutionException e) {

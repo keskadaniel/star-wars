@@ -19,12 +19,11 @@ import pl.keskadaniel.starwars.service.CharacterService;
 public class CharacterController {
 
     private final CharacterService characterService;
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping
     public CustomAllCharactersDto findAll(@RequestParam(name = "page", required = false) final String pageNumber) throws JsonProcessingException {
 
-        AllCharactersDto all = objectMapper.readValue(characterService.findAll(pageNumber), AllCharactersDto.class);
+        AllCharactersDto all = characterService.findAll(pageNumber);
 
         return CharacterMapper.toCustomResponse(all);
     }
