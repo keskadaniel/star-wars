@@ -9,13 +9,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
@@ -27,8 +27,18 @@ dependencies {
 	}
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
+    testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+    testCompile "org.mockito:mockito-core:2.+"
+    testCompile('org.mockito:mockito-junit-jupiter:2.18.3')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
