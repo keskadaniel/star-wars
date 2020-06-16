@@ -23,15 +23,23 @@ public class CharacterServiceTest {
     @Test
     public void shouldReturnAllCharactersDto() throws JsonProcessingException {
        // given
-        final AllCharactersDto allCharactersDto = PrepareData.ofAllCharactersDto();
+        final AllCharactersDto givenAllCharactersDto = PrepareData.ofAllCharactersDto();
+        final AllCharactersDto givenSecondAllCharactersDto = PrepareData.ofAllCharactersDto();
 
-        given(characterService.findAll("2")).willReturn(allCharactersDto);
+        given(characterService.findAll("2")).willReturn(givenAllCharactersDto);
+        given(characterService.findAll("8")).willReturn(givenSecondAllCharactersDto);
 
         // when
         final AllCharactersDto result = characterService.findAll("2");
+        final AllCharactersDto resultSecond = characterService.findAll("8");
 
         // then
-        assertThat(result).isEqualTo(allCharactersDto);
+        assertThat(result).isEqualTo(givenAllCharactersDto);
+        assertThat(result).isInstanceOf(AllCharactersDto.class);
+        assertThat(result).isNotNull();
+
+        assertThat(result).isEqualTo(givenAllCharactersDto);
+        assertThat(result).isNotNull();
 
     }
 

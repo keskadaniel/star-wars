@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import pl.keskadaniel.starwars.model.api.*;
 
 import java.util.ArrayList;
@@ -42,20 +43,26 @@ public class CharacterServiceImpl implements CharacterService {
         var characterPath = allCharactersPath + id + "/";
         CharacterDto characterDto = getCharacter(characterPath);
 
-        if (characterDto != null) {
-            characterDto.setHomeworldDto(fetchHomeworldForCharacter(characterDto));
-            characterDto.setStarshipDtos(fetchStarshipsForCharacter(characterDto));
-        }
+        setCharacterAttributes(characterDto);
 
         return characterDto;
+    }
+
+    private void setCharacterAttributes(CharacterDto characterDto) {
+        if (!StringUtils.isEmpty(characterDto.getHomeworld())) {
+            characterDto.setHomeworldDto(fetchHomeworldForCharacter(characterDto));
+        }
+        if (!StringUtils.isEmpty(characterDto.getStarships())) {
+            characterDto.setStarshipDtos(fetchStarshipsForCharacter(characterDto));
+        }
     }
 
     private AllCharactersDto getCharacters(String allCharactersPath) {
         AllCharactersDto allCharacters = getAllCharacters(allCharactersPath);
 
-        if (allCharacters == null) {
-            log.error("Could not get Characters");
-            return new AllCharactersDto();
+        if (StringUtils.isEmpty(allCharacters.getResults())) {
+            log.error("Could not get Characters!");
+            return allCharacters;
         }
 
         getHomeworldForAll(allCharacters);
@@ -93,6 +100,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     private void getHomeworldForAll(AllCharactersDto allCharacters) {
+
         allCharacters.getResults().stream()
                 .filter(characterDto -> characterDto.getHomeworld() != null)
                 .forEach(characterDto -> {

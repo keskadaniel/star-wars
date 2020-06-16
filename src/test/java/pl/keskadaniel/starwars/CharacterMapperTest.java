@@ -2,6 +2,7 @@ package pl.keskadaniel.starwars;
 
 import org.junit.jupiter.api.Test;
 import pl.keskadaniel.starwars.model.CharacterMapper;
+import pl.keskadaniel.starwars.model.custom.CustomAllCharactersDto;
 import pl.keskadaniel.starwars.model.custom.CustomCharacterDto;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -44,4 +45,37 @@ public class CharacterMapperTest {
         assertThat(result).isNotNull();
 
     }
+
+    @Test
+    public void shouldMapAllCharactersDtoToCustomCharactersList(){
+        //given
+        var givenAllCharacters = PrepareData.ofAllCharactersDto();
+
+        //when
+        var result = CharacterMapper.toCustomCharactersList(givenAllCharacters);
+
+        //then
+        assertThat(result).isInstanceOf(CustomAllCharactersDto.class);
+        assertThat(result).isNotNull();
+        assertThat(result.getCount()).isEqualTo(givenAllCharacters.getCount());
+        assertThat(result.getElements().get(0).getName()).isEqualTo(givenAllCharacters.getResults().get(0).getName());
+    }
+
+    @Test
+    public void shouldMapCharactersDtoToCustomCharacterDto(){
+        //given
+        var givenCharacter = PrepareData.ofCharacterDto();
+
+        //when
+        var result = CharacterMapper.toCustomCharacter(givenCharacter);
+
+        //then
+        assertThat(result).isInstanceOf(CustomCharacterDto.class);
+        assertThat(result).isNotNull();
+        assertThat(result.getHomeworld().getName()).isEqualTo(givenCharacter.getHomeworldDto().getName());
+        assertThat(result.getStarships().size()).isEqualTo(givenCharacter.getStarshipDtos().size());
+    }
+
+
+
 }
