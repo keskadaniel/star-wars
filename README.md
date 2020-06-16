@@ -14,3 +14,7 @@ To use api in Swagger go to:
 ### Tests
 To run:
  > gradle clean test
+
+### Metrics
+Go to:
+ > http://your_address/actuator/
