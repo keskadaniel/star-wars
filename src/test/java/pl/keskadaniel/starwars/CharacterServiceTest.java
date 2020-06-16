@@ -72,4 +72,17 @@ public class CharacterServiceTest {
 
     }
 
+    @Test
+    public void shouldNotReturnCharacterDtoWhenNoIdGiven() {
+        // given
+        given(characterService.findById(null)).willReturn(null);
+
+        // when
+        final CharacterDto result = characterService.findById(null);
+
+        // then
+        assertThat(result).isNull();
+
+    }
+
 }
