@@ -1,6 +1,5 @@
 package pl.keskadaniel.starwars.controller;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +32,6 @@ public class CharacterController {
 
         return CharacterMapper.toCustomCharacter(characterDto);
     }
-
-
-
-
 
 
 }

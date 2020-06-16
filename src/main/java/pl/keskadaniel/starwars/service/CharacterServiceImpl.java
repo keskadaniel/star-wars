@@ -3,6 +3,7 @@ package pl.keskadaniel.starwars.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.keskadaniel.starwars.model.api.*;
@@ -10,17 +11,16 @@ import pl.keskadaniel.starwars.model.api.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CharacterServiceImpl implements CharacterService {
 
     private final HttpClientService httpClient;
+    private final ObjectMapper objectMapper;
 
     @Value("${api.path.all-characters}")
     private String allCharactersPath;
-
-    ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public AllCharactersDto findAll(String pageNumber) {
@@ -53,10 +53,14 @@ public class CharacterServiceImpl implements CharacterService {
     private AllCharactersDto getCharacters(String allCharactersPath) {
         AllCharactersDto allCharacters = getAllCharacters(allCharactersPath);
 
-        if (allCharacters != null) {
-            getHomeworldForAll(allCharacters);
-            getStarshipsForAll(allCharacters);
+        if (allCharacters == null) {
+            log.error("Could not get Characters");
+            return new AllCharactersDto();
         }
+
+        getHomeworldForAll(allCharacters);
+        getStarshipsForAll(allCharacters);
+
         return allCharacters;
     }
 
@@ -80,7 +84,7 @@ public class CharacterServiceImpl implements CharacterService {
                                 starshipDto = objectMapper.readValue(starshipInString, StarshipDto.class);
                                 starshipList.add(starshipDto);
                             } catch (JsonProcessingException e) {
-                                e.printStackTrace();
+                                log.error("Could not parse StarshipDto from String: ", e.getCause());
                             }
                         }
                 );
@@ -103,7 +107,7 @@ public class CharacterServiceImpl implements CharacterService {
         try {
             homeworldDto = objectMapper.readValue(homeworldInString, HomeworldDto.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Could not parse HomeworldDto from String: ", e.getCause());
         }
         return homeworldDto;
     }
@@ -115,7 +119,7 @@ public class CharacterServiceImpl implements CharacterService {
         try {
             allCharactersDto = objectMapper.readValue(charactersInString, AllCharactersDto.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Could not parse AllCharactersDto from String: ", e.getCause());
         }
         return allCharactersDto;
     }
@@ -127,7 +131,7 @@ public class CharacterServiceImpl implements CharacterService {
         try {
             characterDto = objectMapper.readValue(charactersInString, CharacterDto.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("Could not parse CharacterDto from String: ", e.getCause());
         }
         return characterDto;
     }
