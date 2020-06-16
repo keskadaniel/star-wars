@@ -10,3 +10,7 @@ To run image:
 ### Swagger
 To use api in Swagger go to:
  > http://your_address/swagger-ui.html
+
+### Tests
+To run:
+ > gradle clean test
