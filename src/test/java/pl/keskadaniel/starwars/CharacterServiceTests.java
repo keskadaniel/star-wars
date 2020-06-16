@@ -22,7 +22,7 @@ public class CharacterServiceTests {
     @Test
     public void shouldReturnAllCharactersDto() throws JsonProcessingException {
        // given
-        final AllCharactersDto allCharactersDto = new AllCharactersDto();
+        final AllCharactersDto allCharactersDto = PrepareData.ofAllCharactersDto();
 
         given(characterService.findAll("2")).willReturn(allCharactersDto);
 

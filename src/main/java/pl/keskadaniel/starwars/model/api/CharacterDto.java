@@ -49,4 +49,22 @@ public class CharacterDto extends SWcharacter {
     private HomeworldDto homeworldDto;
     private List<StarshipDto> starshipDtos;
 
+    @Builder
+    public CharacterDto(Integer id, String name, String height, String mass, String hairColor,
+                        String skinColor, String eyeColor, String birthYear, String gender,
+                        String homeworld, List<String> films, List<String> species, List<String> vehicles,
+                        List<String> starships, String created, String edited, String url,
+                        HomeworldDto homeworldDto, List<StarshipDto> starshipDtos) {
+        super(id, name, height, mass, hairColor, skinColor, eyeColor, birthYear, gender);
+        this.homeworld = homeworld;
+        this.films = films;
+        this.species = species;
+        this.vehicles = vehicles;
+        this.starships = starships;
+        this.created = created;
+        this.edited = edited;
+        this.url = url;
+        this.homeworldDto = homeworldDto;
+        this.starshipDtos = starshipDtos;
+    }
 }

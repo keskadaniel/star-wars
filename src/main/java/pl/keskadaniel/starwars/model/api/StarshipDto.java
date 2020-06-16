@@ -1,6 +1,7 @@
 package pl.keskadaniel.starwars.model.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -55,4 +56,18 @@ public class StarshipDto extends SWstarship {
     private String edited;
     private String url;
 
+    @Builder
+    public StarshipDto(String name, String model, String manufacturer, String costInCredits,
+                       String length, String maxAtmosphericSpeed, String crew, String passengers,
+                       String cargoCapacity, String consumables, String hyperdriveRating,
+                       String mglt, String starshipClass, List<String> pilots, List<String> films,
+                       String created, String edited, String url) {
+        super(name, model, manufacturer, costInCredits, length, maxAtmosphericSpeed, crew, passengers,
+                cargoCapacity, consumables, hyperdriveRating, mglt, starshipClass);
+        this.pilots = pilots;
+        this.films = films;
+        this.created = created;
+        this.edited = edited;
+        this.url = url;
+    }
 }

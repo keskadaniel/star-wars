@@ -1,6 +1,7 @@
 package pl.keskadaniel.starwars.model.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,4 +38,16 @@ public class HomeworldDto extends SWhomeworld {
     private String edited;
     private String url;
 
+    @Builder
+    public HomeworldDto(String name, String rotationPeriod, String orbitalPeriod, String diameter,
+                        String climate, String gravity, String terrain, String surfaceWater,
+                        String population, List<String> residents, List<String> films,
+                        String created, String edited, String url) {
+        super(name, rotationPeriod, orbitalPeriod, diameter, climate, gravity, terrain, surfaceWater, population);
+        this.residents = residents;
+        this.films = films;
+        this.created = created;
+        this.edited = edited;
+        this.url = url;
+    }
 }
