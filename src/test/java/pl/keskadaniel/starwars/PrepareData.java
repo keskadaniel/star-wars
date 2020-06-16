@@ -50,7 +50,7 @@ public class PrepareData {
                 .skinColor("green")
                 .species(new ArrayList<>())
                 .starships(new ArrayList<>())
-                .url("url.pl/23")
+                .url("www.url.pl/23/")
                 .vehicles(new ArrayList<>())
                 .build();
     }

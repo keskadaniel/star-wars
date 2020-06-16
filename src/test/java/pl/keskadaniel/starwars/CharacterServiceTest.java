@@ -7,13 +7,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.keskadaniel.starwars.model.api.AllCharactersDto;
+import pl.keskadaniel.starwars.model.api.CharacterDto;
 import pl.keskadaniel.starwars.service.CharacterService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class CharacterServiceTests {
+public class CharacterServiceTest {
 
     @Mock
     CharacterService characterService;
@@ -31,6 +32,35 @@ public class CharacterServiceTests {
 
         // then
         assertThat(result).isEqualTo(allCharactersDto);
+
+    }
+
+
+    @Test
+    public void shouldReturnCharacterDto() {
+        // given
+        final CharacterDto character = PrepareData.ofCharacterDto();
+
+        given(characterService.findById("1")).willReturn(character);
+
+        // when
+        final CharacterDto result = characterService.findById("1");
+
+        // then
+        assertThat(result).isEqualTo(character);
+
+    }
+
+    @Test
+    public void shouldNotReturnCharacterDto() {
+        // given
+        final CharacterDto givenCharacter = PrepareData.ofCharacterDto();
+
+        // when
+        final CharacterDto result = characterService.findById("2");
+
+        // then
+        assertThat(result).isNotEqualTo(givenCharacter);
 
     }
 
