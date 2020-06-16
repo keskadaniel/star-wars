@@ -1,7 +1,10 @@
 # Custom Star Wars Api
 
 ### Docker
-To build image:
+To create jar file:
+ > gradle build
+
+To build docker image:
  > docker build -f Dockerfile -t star-wars-app .
 
 To run image:

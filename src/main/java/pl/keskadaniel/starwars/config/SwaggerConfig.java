@@ -15,7 +15,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static springfox.documentation.builders.PathSelectors.ant;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
